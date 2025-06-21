@@ -8,11 +8,14 @@ import { connectDb } from "./Lib/connectDb.js";
 import cookieParser from "cookie-parser";
 dotenv.config();
 const app = express();
+
+// cookieparser
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 const PORT = process.env.PORT;
 app.use("/api/auth", authRoutes);
-app.use(cookieParser());
+
 app.listen(PORT, () => {
   connectDb();
   console.log("server is running in " + PORT);
