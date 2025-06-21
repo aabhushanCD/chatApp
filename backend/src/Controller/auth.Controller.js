@@ -1,8 +1,9 @@
 import User from "../Models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
+import cloudinary from "../Lib/cloudinary.js";
 
-//Login controller _________________________________!______________________________________________________________
+//Login controller __________________________________!______________________________________________________________
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -105,5 +106,42 @@ export const logOut = async (req, res) => {
   } catch (error) {
     console.error("Logout error:", error);
     return res.status(500).json({ message: "Server error" });
+  }
+};
+
+//updateProfile controller __________________________!______________________________________________________________
+export const updateProfile = async (req, res) => {
+  try {
+    const { profilePic } = req.body;
+    const userId = req.user._id;
+    if (!userId || !profilePic) {
+      return res.status(400).json({ message: "Required all fields" });
+    }
+    const uploadResponse = await cloudinary.uploader.upload({ profilePic });
+    if (!uploadResponse) {
+      return res
+        .status(500)
+        .json({ message: "cannot upload profile picture server side error" });
+    }
+    const updateUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        profilePic: uploadResponse.secure_url,
+      },
+      { new: true }
+    );
+    res.status(200).json({ updateUser });
+  } catch (error) {
+    console.log("error in update profile:", error);
+  }
+};
+
+//checkauth controller ______________________________!_______________________________________________________________
+export const checkAuth = async (req, res) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    console.error("Error in checkAuth controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

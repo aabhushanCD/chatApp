@@ -3,19 +3,17 @@ import cors from "cors";
 import { Socket } from "socket.io";
 import authRoutes from "./Routes/auth.route.js";
 import dotenv from "dotenv";
-import { connectDb } from "./DB/connectDb.js";
-import { Socket } from "socket.io";
+import { connectDb } from "./Lib/connectDb.js";
 
+import cookieParser from "cookie-parser";
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 app.use("/api/auth", authRoutes);
-
-
-
-app.listen(port, () => {
+app.use(cookieParser());
+app.listen(PORT, () => {
   connectDb();
-  console.log("server is running in " + port);
+  console.log("server is running in " + PORT);
 });
