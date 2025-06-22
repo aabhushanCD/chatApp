@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { Children, useEffect } from "react";
+import "./App.css";
+import { useAuthStore } from "./component/store/UseAuthStore";
+import { Loader } from "lucide-react";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { BrowserRouter, Navigate } from "react-router-dom";
+import AllRoutes from "./component/route/AllRoutes";
+const App = () => {
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  // if (isCheckingAuth && !authUser) {
+  //   return (
+  //     <>
+  //       <div className="flex items-center justify-center h-screen">
+  //         <Loader className="size-10 animate-spin"></Loader>
+  //       </div>
+  //     </>
+  //   );
+  // }
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <BrowserRouter>
+      <AllRoutes>{Children}</AllRoutes>
+    </BrowserRouter>
+  );
+};
 
-export default App
+export default App;

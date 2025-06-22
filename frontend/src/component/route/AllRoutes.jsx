@@ -1,0 +1,32 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import React from "react";
+import SignUp from "../authComponents/SignUp";
+import Login from "../authComponents/Login";
+
+import Error from "../error";
+import { useAuthStore } from "../store/UseAuthStore";
+import Home from "../dashboard/Home";
+const ProtectedRoute = ({ children }) => {
+  const { authUser } = useAuthStore();
+  return authUser ? children : <Navigate to="/error" />;
+};
+function AllRoutes() {
+  return (
+    <Routes>
+      <Route
+        path="/home"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/signUp" element={<SignUp />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/error" element={<Error />} />
+    </Routes>
+  );
+}
+
+export default AllRoutes;
