@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import React from "react";
-import SignUp from "../authComponents/SignUp";
-import Login from "../authComponents/Login";
+import SignUp from "../pages/authComponents/SignUp";
+import Login from "../pages/authComponents/Login";
 
 import Error from "../error";
 import { useAuthStore } from "../store/UseAuthStore";
-import Home from "../dashboard/Home";
+import Home from "../pages/Home";
 const ProtectedRoute = ({ children }) => {
   const { authUser } = useAuthStore();
   return authUser ? children : <Navigate to="/error" />;
