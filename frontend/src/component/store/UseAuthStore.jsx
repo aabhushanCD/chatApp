@@ -8,7 +8,7 @@ export const useAuthStore = create((set) => ({
   isSigningUp: false,
   isLoggingIng: false,
   isUpdatingProfile: false,
-  
+
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("auth/check", {
@@ -24,7 +24,7 @@ export const useAuthStore = create((set) => ({
   },
   signup: async (data) => {
     try {
-      const res = await axiosInstance("/auth/signUp", {
+      const res = await axiosInstance.post("/auth/signUp", {
         fullName: data.fullName,
         email: data.email,
         password: data.password,
