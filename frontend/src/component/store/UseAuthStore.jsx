@@ -8,7 +8,8 @@ export const useAuthStore = create((set) => ({
   isSigningUp: false,
   isLoggingIng: false,
   isUpdatingProfile: false,
-
+loginData:{},
+signupData:{},
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("auth/check", {
@@ -24,6 +25,7 @@ export const useAuthStore = create((set) => ({
   },
   signup: async (data) => {
     try {
+      set({ isSigningUp : true });
       const res = await axiosInstance.post("/auth/signUp", {
         fullName: data.fullName,
         email: data.email,
@@ -31,8 +33,23 @@ export const useAuthStore = create((set) => ({
       });
 
       set({ res });
+        set({ isSigningUp : false });
     } catch (error) {
       console.error("Error in useAuthStore/signup", error);
     }
   },
+
+  login: async (data) =>{
+    try {
+     set({ isLoggingIng : true });
+      const res = await axiosInstance.post("/auth/login",{
+        email:data.email,
+        password:data.password,
+      })
+     set({ isLoggingIng : false });
+    } catch (error) {
+       console.error("Error in useAuthStore/login", error);
+     set({ isLoggingIng:false})
+    }
+  }
 }));
