@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../../store/UseAuthStore";
 
+
 function Login() {
   const { login, isLoggingIng } = useAuthStore();
   const [formData, setFormData] = useState({
@@ -18,11 +19,20 @@ function Login() {
   };
 
   return (
+
+    <div className="flex flex-col justify-center items-center p-6 sm:p-12">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-center mb-8">
+            <div className="flex flex-col items-center gap-2 group">             
+              <h1 className="text-2xl font-bold mt-2">Login Account</h1>
+            </div>
+         </div>
+         </div>
     <form
       onSubmit={handleSubmit}
       className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
     >
-      <legend className="fieldset-legend">Login</legend>
+    
 
       <label className="label">Email</label>
       <input
@@ -50,6 +60,7 @@ function Login() {
         {isLoggingIng ? "Logging in..." : "Login"}
       </button>
     </form>
+  </div>
   );
 }
 

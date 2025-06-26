@@ -1,6 +1,6 @@
 import React from "react";
 import { create } from "zustand";
-
+import {Navigate} from "react-router-dom"
 import { axiosInstance } from "../lib/axios";
 export const useAuthStore = create((set) => ({
   authUser: null,
@@ -32,24 +32,28 @@ signupData:{},
         password: data.password,
       });
 
-      set({ res });
-        set({ isSigningUp : false });
+      set({ res, isSigningUp : false });
+       
     } catch (error) {
       console.error("Error in useAuthStore/signup", error);
     }
   },
 
-  login: async (data) =>{
+  login: async (data) => {
     try {
      set({ isLoggingIng : true });
       const res = await axiosInstance.post("/auth/login",{
         email:data.email,
         password:data.password,
       })
-     set({ isLoggingIng : false });
+     set({ isLoggingIng : false,
+      authUser: res.data.user,
+      });
+    
     } catch (error) {
-       console.error("Error in useAuthStore/login", error);
-     set({ isLoggingIng:false})
+       
+     set({ isLoggingIng:false })
+     console.error("Error in useAuthStore/login", error);
     }
   }
 }));
