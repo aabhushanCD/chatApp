@@ -7,11 +7,12 @@ import Login from "../pages/authComponents/Login";
 import Error from "../error";
 import { useAuthStore } from "../store/UseAuthStore";
 import Home from "../pages/Home";
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ Children }) => {
   const { authUser } = useAuthStore();
-  return authUser ? children : <Navigate to="/error" />;
+  return authUser ? Children : <Navigate to="/error" />;
 };
 function AllRoutes() {
+
   return (
     <Routes>
       <Route
