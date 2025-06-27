@@ -8,6 +8,7 @@ import AllRoutes from "./component/route/AllRoutes";
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
+ 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);

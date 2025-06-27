@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthStore } from "../../store/UseAuthStore";
+import {  useNavigate } from "react-router-dom";
 
 
 function Login() {
-  const { login, isLoggingIng } = useAuthStore();
+    const navigate = useNavigate();
+  const { login, isLoggingIng,authUser } = useAuthStore();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,6 +19,11 @@ function Login() {
     e.preventDefault();
     await login(formData); // Assuming login expects {email, password}
   };
+    useEffect(() => {
+    if (authUser) {
+      navigate("/");
+    }
+  }, [authUser, navigate]);
 
   return (
 
@@ -32,8 +39,6 @@ function Login() {
       onSubmit={handleSubmit}
       className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
     >
-    
-
       <label className="label">Email</label>
       <input
         type="email"
@@ -58,6 +63,7 @@ function Login() {
         disabled={isLoggingIng}
       >
         {isLoggingIng ? "Logging in..." : "Login"}
+      
       </button>
     </form>
   </div>

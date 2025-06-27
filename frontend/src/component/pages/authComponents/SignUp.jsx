@@ -44,7 +44,7 @@ const SignUp = () => {
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <User className="size-5 text-base-content/40" />
-                </div>
+                </div>  
                 <input
                   type="text"
                   className="input input-bordered w-full pl-10"

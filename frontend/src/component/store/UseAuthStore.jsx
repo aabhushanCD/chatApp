@@ -1,6 +1,6 @@
 import React from "react";
 import { create } from "zustand";
-import {Navigate} from "react-router-dom"
+import {data} from "react-router-dom"
 import { axiosInstance } from "../lib/axios";
 export const useAuthStore = create((set) => ({
   authUser: null,
@@ -55,5 +55,18 @@ export const useAuthStore = create((set) => ({
      set({ isLoggingIng:false })
      console.error("Error in useAuthStore/login", error);
     }
-  }
+  },
+
+    logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logOut", {
+        userId: useAuthStore.getState().authUser?._id,
+      });
+    } catch (error) {
+      console.error("Error in useAuthStore/logout", error);
+    } finally {
+      set({ authUser: null });
+    }
+  },
 }));
+  

@@ -7,9 +7,9 @@ import Login from "../pages/authComponents/Login";
 import Error from "../error";
 import { useAuthStore } from "../store/UseAuthStore";
 import Home from "../pages/Home";
-const ProtectedRoute = ({ Children }) => {
+const ProtectedRoute = ({ children }) => {
   const { authUser } = useAuthStore();
-  return authUser ? Children : <Navigate to="/error" />;
+  return authUser ? children : <Navigate to="/error" />;
 };
 function AllRoutes() {
 
