@@ -16,12 +16,7 @@ function AllRoutes() {
   return (
     <Routes>
       <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        }
+        path="/" element={  <Home /> }
       />
       <Route path="/signUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />

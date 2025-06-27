@@ -1,5 +1,5 @@
 import { useAuthStore } from "../store/UseAuthStore";
-
+import { Link, Navigate } from "react-router-dom";
 const Navbar = () => {
   const { logout, authUser } = useAuthStore();
 
@@ -9,7 +9,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-full">
           {/* Left: Logo or App name */}
           <div className="text-xl font-semibold">
-            <a href="/">ChatApp</a>
+            <Link to="/">ChatApp</Link>
           </div>
 
           {/* Right: User Info / Auth Buttons */}
@@ -17,21 +17,28 @@ const Navbar = () => {
             {authUser ? (
               <>
                 <span className="text-sm">Hi, {authUser.fullName}</span>
+                     <Link
+                to={"/profile"}
+                  className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 transition"
+                >
+                  Profile
+                </Link>
                 <button
                   onClick={logout}
                   className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 transition"
                 >
                   Logout
                 </button>
+             
               </>
             ) : (
               <>
-                <a href="/login" className="text-sm hover:underline">
+                <Link to="/login" className="text-sm hover:underline">
                   Login
-                </a>
-                <a href="/signup" className="text-sm hover:underline">
+                </Link>
+                <Link to="/signup" className="text-sm hover:underline">
                   Sign Up
-                </a>
+                </Link>
               </>
             )}
           </div>
