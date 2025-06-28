@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthStore } from "../../store/UseAuthStore";
 import {  useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 function Login() {
@@ -11,13 +12,26 @@ function Login() {
     password: "",
   });
 
+  const validate =()=>{
+    if(!formData.email) return toast.error("Please enter email");
+    if(!formData.password) return toast.error("Please enter password");
+    if(formData.password.length<6) return toast.error("Password must be greater than 5 digit");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)){
+      return toast.error("Please Enter the valid email address");
+    }
+    return true;
+  }
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.type]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(formData); // Assuming login expects {email, password}
+    if(validate()){
+    await login(formData);
+    }
+    
+     // Assuming login expects {email, password}
   };
     useEffect(() => {
     if (authUser) {
