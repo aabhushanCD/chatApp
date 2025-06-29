@@ -10,6 +10,24 @@ export const useAuthStore = create((set) => ({
   isUpdatingProfile: false,
   loginData:{},
   signupData:{},
+   dark: localStorage.getItem("theme") === "dark",
+  setDark: () => {
+    set((state) => {
+      const newDark = !state.dark;
+
+      // Update HTML class
+      const root = document.documentElement;
+      if (newDark) {
+        root.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      } else {
+        root.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+      }
+
+      return { dark: newDark };
+    });
+  },
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("auth/check", {

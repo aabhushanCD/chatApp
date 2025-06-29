@@ -3,14 +3,21 @@ import "./App.css";
 import { useAuthStore } from "./component/store/UseAuthStore";
 import { Loader } from "lucide-react";
 import {Toaster} from "react-hot-toast"
-import { BrowserRouter, Navigate } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import AllRoutes from "./component/route/AllRoutes";
 import Navbar from "./component/pages/Navbar";
-import Home from "./component/pages/Home";
-const App = () => {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
- 
+const App = () => {
+  const { authUser, checkAuth, isCheckingAuth,dark } = useAuthStore();
+
+useEffect(() => {
+  if (dark) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+}, [dark]);
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);

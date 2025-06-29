@@ -6,7 +6,8 @@ import Error from "../error";
 import { useAuthStore } from "../store/UseAuthStore";
 
 import ProfilePage from "../pages/ProfilePage";
-import Home from "../pages/Home";
+
+import DashBoard from "../chatComponents/DashBoard";
 const ProtectedRoute = ({ children }) => {
   const { authUser } = useAuthStore();
   return authUser ? children : <Navigate to="/error" />;
@@ -15,7 +16,7 @@ function AllRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<Home/>} />
+      <Route path="/" element={<DashBoard/>} />
       <Route path="/signUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/error" element={<Error />} />
