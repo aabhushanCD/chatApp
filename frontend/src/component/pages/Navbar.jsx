@@ -2,9 +2,9 @@ import { useAuthStore } from "../store/UseAuthStore";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   const { logout, authUser,setDark, dark} = useAuthStore();
-  const handleDark = () => {
-    setDark();
-  }
+  // const handleDark = () => {
+  //   setDark();
+  // }
   return (
     <header className="bg-base-100 border-b border-base-300 absolute  z-40 w-full top-0 ">
       <div className="container mx-auto px-4 h-16">
@@ -31,12 +31,12 @@ const Navbar = () => {
                 >
                   Logout
                 </button>
-                <button
+                {/* <button
                   className="px-3 py-1 text-sm"
                   onClick={handleDark}
                 >
                   {dark ? "Light" : "Dark"}
-                </button>
+                </button> */}
              
               </>
             ) : (

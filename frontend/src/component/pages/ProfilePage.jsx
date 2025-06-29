@@ -1,6 +1,13 @@
 import React from "react";
 
 const ProfilePage = () => {
+  const handleProfileSubmit = ()=>{
+    try {
+      const data = updateProfile(profilePic);
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
       {/* Cover Section */}

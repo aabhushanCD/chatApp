@@ -10,13 +10,13 @@ import Navbar from "./component/pages/Navbar";
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth,dark } = useAuthStore();
 
-useEffect(() => {
-  if (dark) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-}, [dark]);
+// useEffect(() => {
+//   if (dark) {
+//     document.documentElement.classList.add("dark");
+//   } else {
+//     document.documentElement.classList.remove("dark");
+//   }
+// }, [dark]);
 
   useEffect(() => {
     checkAuth();

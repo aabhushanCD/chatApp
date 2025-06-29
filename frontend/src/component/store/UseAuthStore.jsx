@@ -1,6 +1,6 @@
-import React from "react";
+
 import { create } from "zustand";
-import {data} from "react-router-dom"
+
 import { axiosInstance } from "../lib/axios";
 export const useAuthStore = create((set) => ({
   authUser: null,
@@ -86,5 +86,23 @@ export const useAuthStore = create((set) => ({
       set({ authUser: null });
     }
   },
+  updateProfile: async(profilePic)=>{
+    try {
+   
+      const res = await axiosInstance.put("/auth/update-profile",{
+        userId:useAuthStore.getState().authUser?._id,
+        profilePic,
+      })
+      if (res.data) {
+      set({ authUser: res.data });
+    }
+
+    } catch (error) {
+      console.error("Error in useAuthStore/updateProfile", error);
+    }
+    finally{
+      set({isUpdatingProfile:false})
+    }
+  }
 }));
   
