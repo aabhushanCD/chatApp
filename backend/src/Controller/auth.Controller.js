@@ -113,12 +113,13 @@ export const logOut = async (req, res) => {
 //updateProfile controller __________________________!______________________________________________________________
 export const updateProfile = async (req, res) => {
   try {
-    const { profilePic } = req.body;
+    const  profilePic  = req.file;
     const userId = req.user._id;
     if (!userId || !profilePic) {
       return res.status(400).json({ message: "Required all fields" });
     }
-    const uploadResponse = await cloudinary.uploader.upload({ profilePic });
+     const base64Image = `data:${profilePic.mimetype};base64,${profilePic.buffer.toString("base64")}`;
+    const uploadResponse = await cloudinary.uploader.upload(base64Image );
     if (!uploadResponse) {
       return res
         .status(500)
@@ -131,7 +132,7 @@ export const updateProfile = async (req, res) => {
       },
       { new: true }
     );
-    res.status(200).json({ updateUser });
+   return res.status(200).json({ updateUser });
   } catch (error) {
     console.log("error in update profile:", error);
   }

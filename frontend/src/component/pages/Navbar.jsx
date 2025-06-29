@@ -1,10 +1,17 @@
 import { useAuthStore } from "../store/UseAuthStore";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  const navigate = useNavigate();
   const { logout, authUser,setDark, dark} = useAuthStore();
   // const handleDark = () => {
   //   setDark();
   // }
+  const handleLogout = async () => {
+  await logout();
+  navigate("/"); // navigates and rerenders
+};
   return (
     <header className="bg-base-100 border-b border-base-300 absolute  z-40 w-full top-0 ">
       <div className="container mx-auto px-4 h-16">
@@ -26,7 +33,7 @@ const Navbar = () => {
                   Profile
                 </Link>
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 transition"
                 >
                   Logout

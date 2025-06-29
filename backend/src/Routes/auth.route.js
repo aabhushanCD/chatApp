@@ -1,4 +1,5 @@
 import express from "express";
+import upload from "../Middleware/upload.js";
 import {
   checkAuth,
   login,
@@ -13,7 +14,8 @@ router.post("/login", login);
 router.post("/signUp", signUp);
 router.post("/logOut", logOut);
 
-router.put("/update-profile", protectRoute, updateProfile);
+router.put("/update-profile", protectRoute, upload.single("profilePic"),
+  updateProfile);
 
 router.get("/check", protectRoute, checkAuth);
 export default router;

@@ -73,6 +73,7 @@ export const useAuthStore = create((set) => ({
      set({ isLoggingIng:false })
      console.error("Error in useAuthStore/login", error);
     }
+    
   },
 
     logout: async () => {
@@ -86,23 +87,19 @@ export const useAuthStore = create((set) => ({
       set({ authUser: null });
     }
   },
-  updateProfile: async(profilePic)=>{
-    try {
-   
-      const res = await axiosInstance.put("/auth/update-profile",{
-        userId:useAuthStore.getState().authUser?._id,
-        profilePic,
-      })
-      if (res.data) {
-      set({ authUser: res.data });
-    }
+ updateProfile: async (formData) => {
+  try {
+    set({ isUpdatingProfile: true });
+    const res = await axiosInstance.put("/auth/update-profile", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: true,
+    });
 
-    } catch (error) {
-      console.error("Error in useAuthStore/updateProfile", error);
-    }
-    finally{
-      set({isUpdatingProfile:false})
-    }
+    set({ authUser: res.data.updateUser, isUpdatingProfile: false });
+  } catch (error) {
+    console.error("Error in updateProfile:", error);
+    set({ isUpdatingProfile: false });
   }
+},
 }));
   
