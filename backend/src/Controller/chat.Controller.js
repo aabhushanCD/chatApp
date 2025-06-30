@@ -1,6 +1,6 @@
 import cloudinary from "../Lib/cloudinary.js";
 import Message from "../Models/messages.model.js";
-
+import User from "../Models/user.model.js";
 export const getUsersForSidebar = async (req, res) => {
   try {
     const looggedInUserId = req.user._id;

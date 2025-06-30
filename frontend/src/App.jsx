@@ -33,18 +33,18 @@ const App = () => {
   }
   return (
   <>
-  
+  <div >
       
     <BrowserRouter>
     <Navbar></Navbar>
     
-      <AllRoutes />
-        <Toaster
+    <AllRoutes />
+    <Toaster
     position="top-center"
     reverseOrder={false}
    />
     </BrowserRouter>
-  
+  </div>
   </>
   );
 };

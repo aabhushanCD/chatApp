@@ -1,4 +1,3 @@
-
 import { create } from "zustand";
 
 import { axiosInstance } from "../lib/axios";
@@ -8,9 +7,10 @@ export const useAuthStore = create((set) => ({
   isSigningUp: false,
   isLoggingIng: false,
   isUpdatingProfile: false,
-  loginData:{},
-  signupData:{},
-   dark: localStorage.getItem("theme") === "dark",
+  loginData: {},
+  signupData: {},
+  onlineUsers: [],
+  dark: localStorage.getItem("theme") === "dark",
   setDark: () => {
     set((state) => {
       const newDark = !state.dark;
@@ -43,15 +43,14 @@ export const useAuthStore = create((set) => ({
   },
   signup: async (data) => {
     try {
-      set({ isSigningUp : true });
+      set({ isSigningUp: true });
       const res = await axiosInstance.post("/auth/signUp", {
         fullName: data.fullName,
         email: data.email,
         password: data.password,
       });
 
-      set({ res, isSigningUp : false });
-       
+      set({ res, isSigningUp: false });
     } catch (error) {
       console.error("Error in useAuthStore/signup", error);
     }
@@ -59,24 +58,19 @@ export const useAuthStore = create((set) => ({
 
   login: async (data) => {
     try {
-     set({ isLoggingIng : true });
-      const res = await axiosInstance.post("/auth/login",{
-        email:data.email,
-        password:data.password,
-      })
-     set({ isLoggingIng : false,
-      authUser: res.data.user,
+      set({ isLoggingIng: true });
+      const res = await axiosInstance.post("/auth/login", {
+        email: data.email,
+        password: data.password,
       });
-    
+      set({ isLoggingIng: false, authUser: res.data.user });
     } catch (error) {
-       
-     set({ isLoggingIng:false })
-     console.error("Error in useAuthStore/login", error);
+      set({ isLoggingIng: false });
+      console.error("Error in useAuthStore/login", error);
     }
-    
   },
 
-    logout: async () => {
+  logout: async () => {
     try {
       await axiosInstance.post("/auth/logOut", {
         userId: useAuthStore.getState().authUser?._id,
@@ -87,19 +81,18 @@ export const useAuthStore = create((set) => ({
       set({ authUser: null });
     }
   },
- updateProfile: async (formData) => {
-  try {
-    set({ isUpdatingProfile: true });
-    const res = await axiosInstance.put("/auth/update-profile", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-      withCredentials: true,
-    });
+  updateProfile: async (formData) => {
+    try {
+      set({ isUpdatingProfile: true });
+      const res = await axiosInstance.put("/auth/update-profile", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      });
 
-    set({ authUser: res.data.updateUser, isUpdatingProfile: false });
-  } catch (error) {
-    console.error("Error in updateProfile:", error);
-    set({ isUpdatingProfile: false });
-  }
-},
+      set({ authUser: res.data.updateUser, isUpdatingProfile: false });
+    } catch (error) {
+      console.error("Error in updateProfile:", error);
+      set({ isUpdatingProfile: false });
+    }
+  },
 }));
-  

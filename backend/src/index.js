@@ -19,13 +19,13 @@ app.use(
 // cookieparser
 app.use(cookieParser());
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 
 // Authentication Routes contain here (login, signUp, checkuser)
 app.use("/api/auth", authRoutes);
 
 // Message Routes contain here (login, signUp, checkuser)
-app.use("/api/message", messageRoutes);
+app.use("/api/messages", messageRoutes);
 
 app.listen(PORT, () => {
   connectDb();
