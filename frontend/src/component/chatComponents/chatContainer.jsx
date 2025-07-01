@@ -26,7 +26,10 @@ function ChatContainer() {
         <MessageInput />
       </div>
     );
-
+  const formatMessageTime = (time) => {
+    const date = new Date(time);
+    return date.toLocaleDateString([], { hour: "2-digit", minute: "2-digit" });
+  };
   return (
     <>
       <div className="flex-1 flex flex-col overflow-auto ">
@@ -40,7 +43,7 @@ function ChatContainer() {
                 message.senderId === authUser._id ? "chat-end" : "chat-start"
               }`}
               ref={messageEndRef}
-            >
+            > 
               <div className=" chat-image avatar">
                 <div className="size-10 rounded-full border">
                   <img

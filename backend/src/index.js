@@ -12,7 +12,9 @@ const PORT = process.env.PORT;
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173", // ⬅️ Replace with frontend URL for better security
+    origin: (origin, callback) => {
+      callback(null, origin); // Reflect the request origin
+    },
     credentials: true,
   })
 );
