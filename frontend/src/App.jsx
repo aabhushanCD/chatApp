@@ -8,8 +8,9 @@ import AllRoutes from "./component/route/AllRoutes";
 import Navbar from "./component/pages/Navbar";
 
 const App = () => {
-  const { authUser, checkAuth, isCheckingAuth,dark } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth,onlineUsers } = useAuthStore();
 
+  console.log({onlineUsers});
 // useEffect(() => {
 //   if (dark) {
 //     document.documentElement.classList.add("dark");

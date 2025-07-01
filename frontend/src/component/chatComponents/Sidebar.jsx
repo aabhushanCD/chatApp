@@ -5,8 +5,14 @@ import { Users } from "lucide-react";
 import image from "../../assets/image.png";
 import { useAuthStore } from "../store/UseAuthStore";
 const Sidebar = () => {
-  const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
-    useChatStore();
+  const {
+    getUsers,
+    users,
+    selectedUser,
+    setSelectedUser,
+
+    isUsersLoading,
+  } = useChatStore();
 
   const { onlineUsers } = useAuthStore();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);

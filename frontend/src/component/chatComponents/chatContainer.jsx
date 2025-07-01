@@ -5,13 +5,28 @@ import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 function ChatContainer() {
-  const { isMessagesLoading, getMessages, messages, selectedUser } =
-    useChatStore();
+  const {
+    isMessagesLoading,
+    subscribeToMessages,
+    getMessages,
+    messages,
+    selectedUser,
+    unSubscribeToMessages,
+  } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
+
   useEffect(() => {
     getMessages(selectedUser._id);
-  }, [selectedUser._id, getMessages]);
+    subscribeToMessages();
+
+    return () => unSubscribeToMessages();
+  }, [
+    selectedUser._id,
+    getMessages,
+    subscribeToMessages,
+    unSubscribeToMessages,
+  ]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
@@ -43,7 +58,7 @@ function ChatContainer() {
                 message.senderId === authUser._id ? "chat-end" : "chat-start"
               }`}
               ref={messageEndRef}
-            > 
+            >
               <div className=" chat-image avatar">
                 <div className="size-10 rounded-full border">
                   <img

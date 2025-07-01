@@ -1,4 +1,5 @@
 import cloudinary from "../Lib/cloudinary.js";
+import { getReceiverSocketId, io } from "../Lib/socket.js";
 import Message from "../Models/messages.model.js";
 import User from "../Models/user.model.js";
 export const getUsersForSidebar = async (req, res) => {
@@ -56,10 +57,29 @@ export const sendMessage = async (req, res) => {
     await newMessage.save();
 
     // socket.io part here
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
 
-    res.status(201).json(newMessage);
+    return res.status(201).json(newMessage);
   } catch (error) {
     console.error("Error in sendMessage: ", error.message);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const DeleteAllMessages = async (req, res) => {
+  try {
+    const result = await Message.deleteMany({}); // deletes all messages
+    console.log("Deleted messages:", result);
+    res
+      .status(200)
+      .json({ success: true, message: "All messages deleted", result });
+  } catch (error) {
+    console.error("Error deleting messages:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to delete messages" });
   }
 };
