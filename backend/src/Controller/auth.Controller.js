@@ -28,7 +28,7 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-   generateToken(user._id,res)
+    generateToken(user._id, res);
     return res.status(200).json({
       message: "Login Successful",
       user: {
@@ -101,7 +101,7 @@ export const logOut = async (req, res) => {
     res.clearCookie("jwt", {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: "strict",
     });
     return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
@@ -113,13 +113,15 @@ export const logOut = async (req, res) => {
 //updateProfile controller __________________________!______________________________________________________________
 export const updateProfile = async (req, res) => {
   try {
-    const  profilePic  = req.file;
+    const profilePic = req.file;
     const userId = req.user._id;
     if (!userId || !profilePic) {
       return res.status(400).json({ message: "Required all fields" });
     }
-     const base64Image = `data:${profilePic.mimetype};base64,${profilePic.buffer.toString("base64")}`;
-    const uploadResponse = await cloudinary.uploader.upload(base64Image );
+    const base64Image = `data:${
+      profilePic.mimetype
+    };base64,${profilePic.buffer.toString("base64")}`;
+    const uploadResponse = await cloudinary.uploader.upload(base64Image);
     if (!uploadResponse) {
       return res
         .status(500)
@@ -132,7 +134,7 @@ export const updateProfile = async (req, res) => {
       },
       { new: true }
     );
-   return res.status(200).json({ updateUser });
+    return res.status(200).json({ updateUser });
   } catch (error) {
     console.log("error in update profile:", error);
   }
