@@ -14,8 +14,12 @@ const PORT = process.env.PORT;
 app.use(
   cors({
     origin: (origin, callback) => {
-      callback(null, origin); // Reflect the request origin
+      if (origin === "https://chat-app-olive-psi.vercel.app/") {
+        callback(null, origin);
+      } // Reflect the request origin
+      else callback(new Error("Not allowed  by CORS!"));
     },
+
     credentials: true,
   })
 );
