@@ -8,12 +8,12 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "chat-app-olive-psi.vercel.app",
+    origin: "https://chat-app-olive-psi.vercel.app",
     credentials: true,
   },
 });
 const userSocketMap = {};
-  
+
 export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
