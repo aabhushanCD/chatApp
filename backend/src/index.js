@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { Socket } from "socket.io";
+
 import authRoutes from "./Routes/auth.route.js";
 import messageRoutes from "./Routes/message.route.js";
 import dotenv from "dotenv";
@@ -32,7 +32,7 @@ app.use("/api/auth", authRoutes);
 // Message Routes contain here (login, signUp, checkuser)
 app.use("/api/messages", messageRoutes);
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   connectDb();
   console.log("server is running in " + PORT);
 });
