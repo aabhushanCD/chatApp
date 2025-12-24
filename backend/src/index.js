@@ -11,6 +11,7 @@ import { app, server } from "./Lib/socket.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
+  "https://chat-app-olive-psi.vercel.app/",
   "https://chat-8csq7yuv7-aabhushancds-projects.vercel.app/",
   "http://localhost:3000/",
   "http://localhost:5173/",
