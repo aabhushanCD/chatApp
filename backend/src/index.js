@@ -9,17 +9,24 @@ import { DeleteAllMessages } from "../src/Controller/chat.Controller.js";
 import cookieParser from "cookie-parser";
 import { app, server } from "./Lib/socket.js";
 dotenv.config();
-const PORT = process.env.PORT;
-
+const PORT = process.env.PORT || 5000;
+const allowedOrigins = [
+  "https://chat-app-olive-psi.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:5173",
+];
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (origin === "https://chat-app-olive-psi.vercel.app/") {
-        callback(null, origin);
-      } // Reflect the request origin
-      else callback(new Error("Not allowed  by CORS!"));
-    },
+      // allow requests with no origin (mobile apps, postman, socket)
+      if (!origin) return callback(null, true);
 
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
